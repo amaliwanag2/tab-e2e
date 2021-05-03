@@ -3,7 +3,13 @@
 /* eslint-env jest */
 import webdriver from 'selenium-webdriver'
 import fetch from 'node-fetch'
-import { getAbsoluteUrl } from '../utils/driver-mgr'
+import {
+  getAbsoluteUrl,
+  waitForElementExistsByCustomSelector,
+  waitForElementExistsByTestId,
+  signIn,
+  navigateTo,
+} from '../utils/driver-mgr'
 
 const { By } = webdriver
 const testTimeoutdefault = 70e3
@@ -14,11 +20,11 @@ const getSearchTests = (getDriver) => {
     {
       description: 'should redirect to auth from search',
       test: async () => {
-        const driver = getDriver(
+        const { driver } = getDriver(
           'Search: acceptance tests: should redirect to auth from search'
         )
-        await driver.navigateTo('/search/?q=hi%20there!')
-        await driver.waitForElementExistsByTestId('authentication-page')
+        await navigateTo(driver, '/search/?q=hi%20there!')
+        await waitForElementExistsByTestId(driver, 'authentication-page')
         await driver.quit()
       },
       testTimeout: testTimeoutdefault,
@@ -27,19 +33,32 @@ const getSearchTests = (getDriver) => {
       description:
         'should load the search page (with search query) after signing in',
       test: async () => {
-        const driver = getDriver(
+        const {
+          driver,
+          config: {
+            selenium: {
+              INTEGRATION_TEST_USER_EMAIL,
+              INTEGRATION_TEST_USER_PASSWORD,
+            },
+          },
+        } = getDriver(
           'Search: acceptance tests: should load the search page (with search query) after signing in'
         )
-        await driver.navigateTo('/search/?q=hi%20there!') // this should redirect to the auth page
-        await driver.waitForElementExistsByTestId('authentication-page')
-        await driver.signIn()
+        await navigateTo(driver, '/search/?q=hi%20there!') // this should redirect to the auth page
+        await waitForElementExistsByTestId(driver, 'authentication-page')
+        await signIn(
+          driver,
+          INTEGRATION_TEST_USER_EMAIL,
+          INTEGRATION_TEST_USER_PASSWORD
+        )
 
         // Make sure we navigate to the search results page after signing in.
-        await driver.waitForElementExistsByTestId('search-page')
+        await waitForElementExistsByTestId(driver, 'search-page')
 
         // Make sure we show the original search query in the search input.
         const inputElemCSSSelector = `[data-test-id='search-input'] > input`
-        await driver.waitForElementExistsByCustomSelector(
+        await waitForElementExistsByCustomSelector(
+          driver,
           By.css(inputElemCSSSelector)
         )
         const inputElem = await driver.findElement(

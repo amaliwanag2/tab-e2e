@@ -1,3 +1,8 @@
+import {
+  waitForElementExistsByTestId,
+  signIn,
+  navigateTo,
+} from '../utils/driver-mgr'
 /* eslint-disable jest/no-jasmine-globals */
 /* eslint-env jest */
 /* globals jasmine */
@@ -9,9 +14,11 @@ const getBasicLegacyTests = (getDriver) => {
     {
       description: 'should load the auth page',
       test: async () => {
-        const driver = getDriver('Tab: acceptance tests: should load auth page')
-        await driver.navigateTo('/newtab/')
-        await driver.waitForElementExistsByTestId('authentication-page')
+        const { driver } = getDriver(
+          'Tab: acceptance tests: should load auth page'
+        )
+        await navigateTo(driver, '/newtab/')
+        await waitForElementExistsByTestId(driver, 'authentication-page')
         expect(true).toBe(true)
         await driver.quit()
       },
@@ -20,13 +27,30 @@ const getBasicLegacyTests = (getDriver) => {
     {
       description: 'should go to the new tab dashboard after signing in',
       test: async () => {
-        const driver = getDriver(
+        const {
+          driver,
+          config: {
+            selenium: {
+              INTEGRATION_TEST_USER_EMAIL,
+              INTEGRATION_TEST_USER_PASSWORD,
+            },
+          },
+        } = getDriver(
           'Tab: acceptance tests: should go to the new tab dashboard after signing in'
         )
-        await driver.navigateTo('/newtab/') // this should redirect to the auth page
-        await driver.waitForElementExistsByTestId('authentication-page')
-        await driver.signIn()
-        await driver.waitForElementExistsByTestId('app-dashboard')
+        console.log(
+          driver,
+          INTEGRATION_TEST_USER_EMAIL,
+          INTEGRATION_TEST_USER_PASSWORD
+        )
+        await navigateTo(driver, '/newtab/') // this should redirect to the auth page
+        await waitForElementExistsByTestId(driver, 'authentication-page')
+        await signIn(
+          driver,
+          INTEGRATION_TEST_USER_EMAIL,
+          INTEGRATION_TEST_USER_PASSWORD
+        )
+        await waitForElementExistsByTestId(driver, 'app-dashboard')
         await driver.quit()
       },
       testTimeout: testTimeoutdefault,
