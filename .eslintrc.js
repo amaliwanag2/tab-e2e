@@ -33,6 +33,8 @@ module.exports = {
       rules: {
         'global-require': 0,
         'react/jsx-props-no-spreading': 0,
+        'jest/valid-title': 'warn',
+        'jest/no-export': 0,
       },
     },
   ],

@@ -17,16 +17,18 @@ class EmailClient {
     this.serverId = process.env.MAILOSAUR_SERVER_ID
     this.receivedAfter = receivedAfter
   }
+
   static async build({ emailOverride, receivedAfter } = {}) {
     const mailosaur = new MailosaurClient(process.env.MAILOSAUR_API_KEY)
     console.log(process.env.MAILOSAUR_SERVER_ID)
-    const email = emailOverride
-      ? emailOverride
-      : await mailosaur.servers.generateEmailAddress(
-          process.env.MAILOSAUR_SERVER_ID
-        )
+    const email =
+      emailOverride ||
+      (await mailosaur.servers.generateEmailAddress(
+        process.env.MAILOSAUR_SERVER_ID
+      ))
     return new EmailClient(email, mailosaur, receivedAfter)
   }
+
   async getLink() {
     const criteria = {
       sentTo: this.email,

@@ -10,7 +10,7 @@
     "build:clean": "rm -rf ./build",
     "build:src": "NODE_ENV=production webpack",
     "lint": "eslint ./src/",
-    "test": "npm-run-all -s lint test:coverage",
+    "test": "dotenv-extended --defaults=./.env --path=./.env.local npm-run-all -s lint test:coverage",
     "test:run": "jest --env=jsdom",
     "test:coverage": "yarn run test:run --coverage",
     "test:watch": "yarn run test:run --watch",
@@ -44,6 +44,7 @@
     "codecov": "^3.8.1",
     "copy-webpack-plugin": "^7.0.0",
     "core-js": "^3.8.1",
+    "dotenv-extended": "^2.4.0",
     "eslint": "^7.16.0",
     "eslint-config-airbnb": "^18.2.1",
     "eslint-config-prettier": "^7.1.0",
@@ -60,10 +61,18 @@
     "moment": "^2.29.1",
     "npm-run-all": "^4.1.5",
     "prettier": "^2.2.1",
-    "selenium-webdriver": "^4.0.0-alpha.5",
     "webpack": "^5.35.1",
-    "webpack-cli": "^4.6.0",
     "webpack-bundle-analyzer": "^4.3.0",
+    "webpack-cli": "^4.6.0",
     "webpack-node-externals": "^2.5.2"
+  },
+  "dependencies": {
+    "@sentry/browser": "^5.14.2",
+    "@sentry/integrations": "^5.14.2",
+    "chromedriver": "^90.0.0",
+    "mailosaur": "^7.2.1",
+    "node-fetch": "^2.6.1",
+    "promise-retry": "^2.0.1",
+    "selenium-webdriver": "^4.0.0-alpha.5"
   }
 }
