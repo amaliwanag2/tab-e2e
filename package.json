@@ -4,7 +4,6 @@
   "description": "",
   "browser": "build/index.js",
   "main": "build/index.js",
-  "types": "build/index.d.ts",
   "scripts": {
     "build": "npm-run-all -s build:clean build:src",
     "build:clean": "rm -rf ./build",

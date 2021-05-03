@@ -1,7 +1,6 @@
 const path = require('path')
 const { BundleAnalyzerPlugin } = require('webpack-bundle-analyzer')
 const nodeExternals = require('webpack-node-externals')
-const CopyPlugin = require('copy-webpack-plugin')
 
 const analyzeBundle = process.env.WEBPACK_ANALYZE_BUNDLE
 
@@ -29,16 +28,6 @@ const sharedConfig = {
     }),
     'fetch',
   ],
-  plugins: [
-    new CopyPlugin({
-      patterns: [
-        {
-          from: './index.d.ts',
-          to: './index.d.ts',
-        },
-      ],
-    }),
-  ],
 }
 
 const clientConfig = {
@@ -50,7 +39,6 @@ const clientConfig = {
     filename: 'index.js',
   },
   plugins: [
-    ...sharedConfig.plugins,
     new BundleAnalyzerPlugin({
       analyzerMode: analyzeBundle ? 'static' : 'disabled',
       defaultSizes: 'stat',
