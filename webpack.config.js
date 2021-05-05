@@ -24,7 +24,7 @@ const sharedConfig = {
   externals: [
     // By default, don't bundle anything from node_modules.
     nodeExternals({
-      allowlist: ['cookies'],
+      allowlist: [],
     }),
     'fetch',
   ],
