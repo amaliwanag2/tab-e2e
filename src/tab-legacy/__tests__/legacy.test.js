@@ -1,6 +1,7 @@
 import initDriver from '../../utils/driver-mgr'
 import getBasicLegacyTests from '../basics'
 import getSearchTests from '../search'
+import getUserSignup from '../userSignup'
 
 const config = {
   selenium: {
@@ -17,7 +18,8 @@ const config = {
 describe('Tab: acceptance tests', () => {
   const basicTests = getBasicLegacyTests(initDriver(config))
   const searchTests = getSearchTests(initDriver(config))
-  const tests = [...basicTests, ...searchTests]
+  const userSignupLegacyTests = getUserSignup(initDriver(config))
+  const tests = [...basicTests, ...searchTests, ...userSignupLegacyTests]
   tests.forEach(({ description, test, testTimeout }) =>
     // eslint-disable-next-line jest/expect-expect
     it(description, test, testTimeout)

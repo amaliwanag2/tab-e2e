@@ -20,7 +20,6 @@ class EmailClient {
 
   static async build({ emailOverride, receivedAfter } = {}) {
     const mailosaur = new MailosaurClient(process.env.MAILOSAUR_API_KEY)
-    console.log(process.env.MAILOSAUR_SERVER_ID)
     const email =
       emailOverride ||
       (await mailosaur.servers.generateEmailAddress(
@@ -41,7 +40,7 @@ class EmailClient {
       { maxTimeout: 5000 }
     )
     const firstLink = email.html.links[0]
-    return firstLink.href
+    return firstLink.text
   }
 }
 export default EmailClient
