@@ -48,7 +48,7 @@ const getUserSignupTests = (getDriver) => {
             By.css(`[data-test-id='cats-background']`)
           )
           expect(backgroundImages.length).toEqual(0)
-          await signUp(driver, mailClient.email, 'password')
+          await signUp(driver, mailClient.email, mailClient.password)
           const link = await mailClient.getLink()
           await driver.navigate().to(link)
           await waitAndClick(driver, By.xpath('//button[text()="Continue"]'))
@@ -237,7 +237,7 @@ const getUserSignupTests = (getDriver) => {
             By.xpath(`//p[text()="${mailClient.email}"]`)
           )
           await waitAndClick(driver, By.xpath('//span[text()="Log Out"]'))
-          await signIn(driver, mailClient.email, 'password')
+          await signIn(driver, mailClient.email, mailClient.password)
         } finally {
           await driver.quit()
         }
@@ -283,7 +283,7 @@ const getUserSignupTests = (getDriver) => {
             MAILOSAUR_SERVER_ID,
           })
 
-          await signUp(driver, mailClient.email, 'password')
+          await signUp(driver, mailClient.email, mailClient.password)
           const link = (await mailClient.getLink()).replace('dev-', 'test-')
           await driver.navigate().to(link)
           await waitForElementExistsByCustomSelector(
@@ -348,7 +348,7 @@ const getUserSignupTests = (getDriver) => {
             By.xpath(`//p[text()="${mailClient.email}"]`)
           )
           await waitAndClick(driver, By.xpath('//span[text()="Log Out"]'))
-          await signIn(driver, mailClient.email, 'password')
+          await signIn(driver, mailClient.email, mailClient.password)
         } finally {
           await driver.quit()
         }

@@ -11,9 +11,16 @@ import promiseRetry from 'promise-retry'
  * * @property  email - a randomly generated email address to send and receive emails from
  */
 class EmailClient {
-  constructor(email, initializedClient, receivedAfter, MAILOSAUR_SERVER_ID) {
+  constructor(
+    email,
+    password,
+    initializedClient,
+    receivedAfter,
+    MAILOSAUR_SERVER_ID
+  ) {
     this.mailosaur = initializedClient
     this.email = email
+    this.password = password
     this.serverId = MAILOSAUR_SERVER_ID
     this.receivedAfter = receivedAfter
   }
@@ -28,7 +35,14 @@ class EmailClient {
     const email =
       emailOverride ||
       (await mailosaur.servers.generateEmailAddress(MAILOSAUR_SERVER_ID))
-    return new EmailClient(email, mailosaur, receivedAfter, MAILOSAUR_SERVER_ID)
+    const password = Math.random().toString(36).slice(-8)
+    return new EmailClient(
+      email,
+      password,
+      mailosaur,
+      receivedAfter,
+      MAILOSAUR_SERVER_ID
+    )
   }
 
   async getLink() {
