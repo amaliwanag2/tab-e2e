@@ -2,7 +2,6 @@
   "name": "tab-e2e",
   "version": "1.0.0",
   "description": "",
-  "browser": "build/index.js",
   "main": "build/index.js",
   "scripts": {
     "build": "npm-run-all -s build:clean build:src",

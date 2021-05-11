@@ -4,14 +4,16 @@ const nodeExternals = require('webpack-node-externals')
 
 const analyzeBundle = process.env.WEBPACK_ANALYZE_BUNDLE
 
-const sharedConfig = {
+const config = {
   mode: 'production',
+  entry: './src/index.js',
   output: {
-    // filename set in individual configs below.
+    filename: 'index.js',
     path: path.resolve(__dirname, 'build'),
     libraryTarget: 'commonjs2',
     libraryExport: 'default',
   },
+  target: 'node',
   module: {
     rules: [
       {
@@ -28,16 +30,6 @@ const sharedConfig = {
     }),
     'fetch',
   ],
-}
-
-const clientConfig = {
-  ...sharedConfig,
-  entry: './src/index.js',
-  target: 'web',
-  output: {
-    ...sharedConfig.output,
-    filename: 'index.js',
-  },
   plugins: [
     new BundleAnalyzerPlugin({
       analyzerMode: analyzeBundle ? 'static' : 'disabled',
@@ -47,4 +39,4 @@ const clientConfig = {
   ],
 }
 
-module.exports = [clientConfig]
+module.exports = config
