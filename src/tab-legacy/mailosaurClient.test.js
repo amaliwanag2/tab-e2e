@@ -1,5 +1,5 @@
-/* eslint-disable jest/no-jasmine-globals */
-/* eslint-env jest */
+// Tests aren't necessary unless developing on the Mailosaur client.
+/* eslint jest/no-jasmine-globals:0 jest/no-disabled-tests:0 */
 /* globals jasmine */
 
 import MailKitty from '../utils/mailosaurClient'
@@ -39,6 +39,7 @@ describe('Search: acceptance tests', () => {
         receivedAfter: new Date(2021, 3, 1),
       })
       const url = await newClient.getLink()
+      // eslint-disable-next-line no-console
       console.log(url)
       expect(typeof url).toBe('string')
     },

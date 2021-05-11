@@ -38,11 +38,6 @@ const getBasicLegacyTests = (getDriver) => {
         } = getDriver(
           'Tab: acceptance tests: should go to the new tab dashboard after signing in'
         )
-        console.log(
-          driver,
-          INTEGRATION_TEST_USER_EMAIL,
-          INTEGRATION_TEST_USER_PASSWORD
-        )
         await navigateTo(driver, '/newtab/') // this should redirect to the auth page
         await waitForElementExistsByTestId(driver, 'authentication-page')
         await signIn(
