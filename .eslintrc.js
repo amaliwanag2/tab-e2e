@@ -1,24 +1,8 @@
 module.exports = {
   extends: ['airbnb', 'prettier'],
-  plugins: ['prettier', 'react-hooks'],
+  plugins: ['prettier'],
   rules: {
     'prettier/prettier': 'error',
-    'react/jsx-filename-extension': 0,
-    'react/jsx-one-expression-per-line': 0,
-    'react/no-unescaped-entities': 0,
-    'react/prop-types': 0,
-    'jsx-a11y/anchor-is-valid': 0, // https://github.com/zeit/next.js/issues/5533
-    // The jsx-wrap-multilines rule conflicts with Prettier.
-    // https://github.com/prettier/prettier/issues/1009#issuecomment-286993938
-    'react/jsx-wrap-multilines': [
-      'error',
-      {
-        declaration: false,
-        assignment: false,
-      },
-    ],
-    'react-hooks/rules-of-hooks': 'error',
-    'react-hooks/exhaustive-deps': 'error',
   },
   overrides: [
     // Set Jest rules only for test files.
@@ -32,7 +16,6 @@ module.exports = {
       plugins: ['jest'],
       rules: {
         'global-require': 0,
-        'react/jsx-props-no-spreading': 0,
         'jest/valid-title': 'warn',
         'jest/no-export': 0,
       },
@@ -45,14 +28,14 @@ module.exports = {
   env: {
     es6: true,
   },
-  globals: {
-    // Polyfilled in Next.js 9.4. Set as a Webpack external.
-    fetch: 'writable',
-  },
   settings: {
     // Handle linting for absolute imports.
     'import/resolver': {
       alias: [['src', './src']],
+    },
+    // https://github.com/yannickcr/eslint-plugin-react/issues/1955#issuecomment-619475509
+    react: {
+      version: 'latest',
     },
   },
 }
