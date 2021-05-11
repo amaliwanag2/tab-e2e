@@ -19,15 +19,15 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/amaliwanag2/tab-e2e.git"
+    "url": "git+https://github.com/gladly-team/tab-e2e.git"
   },
   "keywords": [],
   "author": "",
   "license": "ISC",
   "bugs": {
-    "url": "https://github.com/amaliwanag2/tab-e2e/issues"
+    "url": "https://github.com/gladly-team/tab-e2e/issues"
   },
-  "homepage": "https://github.com/amaliwanag2/tab-e2e#readme",
+  "homepage": "https://github.com/gladly-team/tab-e2e#readme",
   "devDependencies": {
     "@babel/cli": "^7.12.10",
     "@babel/core": "^7.12.10",

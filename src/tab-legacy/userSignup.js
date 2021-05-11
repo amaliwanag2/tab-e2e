@@ -22,9 +22,12 @@ const getUserSignupTests = (getDriver) => {
       description:
         'should successfully sign up and create a user in Chrome Legacy',
       test: async () => {
-        const { driver } = getDriver(
-          'Tab: acceptance tests: should sign up legacy '
-        )
+        const {
+          driver,
+          config: {
+            mailosaur: { MAILOSAUR_API_KEY, MAILOSAUR_SERVER_ID } = {},
+          },
+        } = getDriver('Tab: acceptance tests: should sign up legacy ')
         await navigateTo(driver, '')
         await waitAndClick(driver, By.css('button'))
         await waitForElementExistsByCustomSelector(
@@ -36,7 +39,10 @@ const getUserSignupTests = (getDriver) => {
           driver,
           By.xpath('//span[text()="Sign in with email"]')
         )
-        const mailClient = await EmailClient.build()
+        const mailClient = await EmailClient.build({
+          MAILOSAUR_API_KEY,
+          MAILOSAUR_SERVER_ID,
+        })
         const backgroundImages = await driver.findElements(
           By.css(`[data-test-id='cats-background']`)
         )
@@ -74,9 +80,12 @@ const getUserSignupTests = (getDriver) => {
       description:
         'should successfully sign up and create a user in Chrome Legacy referral flow',
       test: async () => {
-        const { driver } = getDriver(
-          'Tab: acceptance tests: should sign up legacy referral'
-        )
+        const {
+          driver,
+          config: {
+            mailosaur: { MAILOSAUR_API_KEY, MAILOSAUR_SERVER_ID } = {},
+          },
+        } = getDriver('Tab: acceptance tests: should sign up legacy referral')
         await navigateTo(driver, '?u=gladly')
         await waitAndClick(driver, By.css('button'))
         await waitForElementExistsByCustomSelector(
@@ -88,7 +97,10 @@ const getUserSignupTests = (getDriver) => {
           driver,
           By.xpath('//span[text()="Sign in with email"]')
         )
-        const mailClient = await EmailClient.build()
+        const mailClient = await EmailClient.build({
+          MAILOSAUR_API_KEY,
+          MAILOSAUR_SERVER_ID,
+        })
         const backgroundImages = await driver.findElements(
           By.css(`[data-test-id='cats-background']`)
         )
@@ -125,7 +137,12 @@ const getUserSignupTests = (getDriver) => {
     {
       description: 'should successfully sign up and create a user in Chrome v4',
       test: async () => {
-        const { driver } = getDriver('Tab: acceptance tests: should sign up v4')
+        const {
+          driver,
+          config: {
+            mailosaur: { MAILOSAUR_API_KEY, MAILOSAUR_SERVER_ID } = {},
+          },
+        } = getDriver('Tab: acceptance tests: should sign up v4')
         await navigateTo(driver, '/cats/')
         await waitAndClick(driver, By.css('button'))
         await waitForElementExistsByCustomSelector(
@@ -141,7 +158,10 @@ const getUserSignupTests = (getDriver) => {
           By.css(`[data-test-id='cats-background']`)
         )
         expect(backgroundImages.length).toEqual(1)
-        const mailClient = await EmailClient.build()
+        const mailClient = await EmailClient.build({
+          MAILOSAUR_API_KEY,
+          MAILOSAUR_SERVER_ID,
+        })
 
         await signUp(driver, mailClient.email, 'password')
         const link = await mailClient.getLink()
@@ -210,9 +230,12 @@ const getUserSignupTests = (getDriver) => {
       description:
         'should successfully sign up and create a user in Chrome v4 referral',
       test: async () => {
-        const { driver } = getDriver(
-          'Tab: acceptance tests: should sign up v4 referral '
-        )
+        const {
+          driver,
+          config: {
+            mailosaur: { MAILOSAUR_API_KEY, MAILOSAUR_SERVER_ID } = {},
+          },
+        } = getDriver('Tab: acceptance tests: should sign up v4 referral ')
         await navigateTo(driver, '/cats/?u=gladly')
         await waitForElementExistsByCustomSelector(
           driver,
@@ -236,7 +259,10 @@ const getUserSignupTests = (getDriver) => {
           By.css(`[data-test-id='cats-background']`)
         )
         expect(backgroundImages.length).toEqual(1)
-        const mailClient = await EmailClient.build()
+        const mailClient = await EmailClient.build({
+          MAILOSAUR_API_KEY,
+          MAILOSAUR_SERVER_ID,
+        })
 
         await signUp(driver, mailClient.email, 'password')
         const link = (await mailClient.getLink()).replace('dev-', 'test-')
