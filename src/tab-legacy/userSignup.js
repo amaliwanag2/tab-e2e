@@ -78,7 +78,7 @@ const getUserSignupTests = (getDriver) => {
           )
           await signIn(driver, mailClient.email, 'password')
         } finally {
-          driver.quit()
+          await driver.quit()
         }
       },
       testTimeout: testTimeoutdefault,
@@ -143,7 +143,7 @@ const getUserSignupTests = (getDriver) => {
           )
           await signIn(driver, mailClient.email, 'password')
         } finally {
-          driver.quit()
+          await driver.quit()
         }
       },
       testTimeout: testTimeoutdefault,
@@ -239,7 +239,7 @@ const getUserSignupTests = (getDriver) => {
           await waitAndClick(driver, By.xpath('//span[text()="Log Out"]'))
           await signIn(driver, mailClient.email, 'password')
         } finally {
-          driver.quit()
+          await driver.quit()
         }
       },
       testTimeout: testTimeoutdefault,
@@ -350,7 +350,7 @@ const getUserSignupTests = (getDriver) => {
           await waitAndClick(driver, By.xpath('//span[text()="Log Out"]'))
           await signIn(driver, mailClient.email, 'password')
         } finally {
-          driver.quit()
+          await driver.quit()
         }
       },
       testTimeout: testTimeoutdefault,
