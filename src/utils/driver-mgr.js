@@ -77,6 +77,10 @@ export const setValue = (driver, selector, value) =>
 
 export const click = (driver, selector) => driver.findElement(selector).click()
 
+export const waitAndClick = async (driver, selector) => {
+  await waitForElementExistsByCustomSelector(driver, selector)
+  await click(driver, selector)
+}
 export const navigateTo = (driver, url) =>
   driver.navigate().to(getAbsoluteUrl(url))
 
@@ -102,6 +106,34 @@ export const signIn = async (
   const emailSignInButtonSelector = By.css('[data-provider-id="password"]')
   const emailInputSelector = By.css('input[name="email"]')
   const passwordInputSelector = By.css('input[name="password"]')
+
+  await waitForElementExistsByCustomSelector(driver, emailSignInButtonSelector)
+  await click(driver, emailSignInButtonSelector)
+  await waitForElementExistsByCustomSelector(driver, emailInputSelector)
+  await setValue(driver, emailInputSelector, testUserEmail)
+  await click(driver, By.css('button[type="submit"]'))
+  await waitForElementExistsByCustomSelector(driver, passwordInputSelector)
+  await setValue(driver, passwordInputSelector, testUserPassword)
+  await click(driver, By.css('button[type="submit"]'))
+}
+export const signUp = async (
+  driver,
+  INTEGRATION_TEST_USER_EMAIL,
+  INTEGRATION_TEST_USER_PASSWORD
+) => {
+  // We set these private env vars directly in our CI tool.
+  const testUserEmail = INTEGRATION_TEST_USER_EMAIL
+  const testUserPassword = INTEGRATION_TEST_USER_PASSWORD
+  if (!testUserEmail) {
+    throw new Error('You must provide an email.')
+  }
+  if (!testUserPassword) {
+    throw new Error('You must provide a password.')
+  }
+
+  const emailSignInButtonSelector = By.css('[data-provider-id="password"]')
+  const emailInputSelector = By.css('input[name="email"]')
+  const passwordInputSelector = By.css('input[name="newPassword"]')
 
   await waitForElementExistsByCustomSelector(driver, emailSignInButtonSelector)
   await click(driver, emailSignInButtonSelector)

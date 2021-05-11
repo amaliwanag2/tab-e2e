@@ -11,22 +11,24 @@ import promiseRetry from 'promise-retry'
  * * @property  email - a randomly generated email address to send and receive emails from
  */
 class EmailClient {
-  constructor(email, initializedClient, receivedAfter) {
+  constructor(email, initializedClient, receivedAfter, MAILOSAUR_SERVER_ID) {
     this.mailosaur = initializedClient
     this.email = email
-    this.serverId = process.env.MAILOSAUR_SERVER_ID
+    this.serverId = MAILOSAUR_SERVER_ID
     this.receivedAfter = receivedAfter
   }
 
-  static async build({ emailOverride, receivedAfter } = {}) {
-    const mailosaur = new MailosaurClient(process.env.MAILOSAUR_API_KEY)
-    console.log(process.env.MAILOSAUR_SERVER_ID)
+  static async build({
+    emailOverride,
+    receivedAfter,
+    MAILOSAUR_API_KEY = process.env.MAILOSAUR_API_KEY,
+    MAILOSAUR_SERVER_ID = process.env.MAILOSAUR_SERVER_ID,
+  } = {}) {
+    const mailosaur = new MailosaurClient(MAILOSAUR_API_KEY)
     const email =
       emailOverride ||
-      (await mailosaur.servers.generateEmailAddress(
-        process.env.MAILOSAUR_SERVER_ID
-      ))
-    return new EmailClient(email, mailosaur, receivedAfter)
+      (await mailosaur.servers.generateEmailAddress(MAILOSAUR_SERVER_ID))
+    return new EmailClient(email, mailosaur, receivedAfter, MAILOSAUR_SERVER_ID)
   }
 
   async getLink() {
@@ -41,7 +43,7 @@ class EmailClient {
       { maxTimeout: 5000 }
     )
     const firstLink = email.html.links[0]
-    return firstLink.href
+    return firstLink.text
   }
 }
 export default EmailClient
