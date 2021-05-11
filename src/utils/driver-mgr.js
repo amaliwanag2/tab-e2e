@@ -9,7 +9,7 @@ const BROWSERSTACK_PROJECT = 'tab'
 const BROWSERSTACK_BUILD = 'tab-'
 
 const getAppBaseUrl = () => {
-  const seleniumHostDefault = 'http://localhost:3000'
+  const seleniumHostDefault = 'https://test-tab2017.gladly.io'
   const { SELENIUM_HOST } = process.env
   if (!SELENIUM_HOST) {
     // eslint-disable-next-line no-console
@@ -17,7 +17,7 @@ const getAppBaseUrl = () => {
       `Environment variable "SELENIUM_HOST" is not set. Using default of "${seleniumHostDefault}".`
     )
   }
-  return process.env.SELENIUM_HOST || 'http://localhost:3000'
+  return process.env.SELENIUM_HOST || 'https://test-tab2017.gladly.io'
 }
 
 export const getAbsoluteUrl = (relativeUrl) =>
