@@ -8,7 +8,7 @@
     "build:clean": "rm -rf ./build",
     "build:src": "NODE_ENV=production webpack",
     "lint": "eslint ./src/",
-    "test": "dotenv-extended --defaults=./.env --path=./.env.local npm-run-all -s lint test:coverage",
+    "test": "dotenv-extended --defaults=./.env --path=./.env.local npm-run-all -s test:coverage",
     "test:run": "jest --env=jsdom",
     "test:coverage": "yarn run test:run --coverage",
     "test:watch": "yarn run test:run --watch",
