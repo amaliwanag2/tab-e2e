@@ -6,6 +6,9 @@ import getUserSignup from '../userSignup'
 const config = {
   selenium: {
     SELENIUM_DRIVER_TYPE: process.env.SELENIUM_DRIVER_TYPE,
+    // TODO: move these out of the Selenium object
+    // TODO: potentially deprecate using a fixed user, given we can
+    //   create new users on the fly
     INTEGRATION_TEST_USER_EMAIL: process.env.INTEGRATION_TEST_USER_EMAIL,
     INTEGRATION_TEST_USER_PASSWORD: process.env.INTEGRATION_TEST_USER_PASSWORD,
   },

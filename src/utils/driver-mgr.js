@@ -9,7 +9,11 @@ const BROWSERSTACK_PROJECT = 'tab'
 const BROWSERSTACK_BUILD = 'tab-'
 
 const getAppBaseUrl = () => {
+  // TODO: remove defaults
   const seleniumHostDefault = 'https://test-tab2017.gladly.io'
+
+  // TODO: remove all use env vars from this package. All vars should
+  // be passed via the config.
   const { SELENIUM_HOST } = process.env
   if (!SELENIUM_HOST) {
     // eslint-disable-next-line no-console
@@ -24,12 +28,16 @@ export const getAbsoluteUrl = (relativeUrl) =>
   `${getAppBaseUrl()}${relativeUrl}`
 
 const initDriver = (config = { selenium: {}, browserstack: {}, build: {} }) => {
+  // TODO: config properties should be camelCase.
   const {
     selenium: { SELENIUM_DRIVER_TYPE = process.env.SELENIUM_DRIVER_TYPE },
     browserstack: {
       BROWSERSTACK_USER = process.env.BROWSERSTACK_USER,
       BROWSERSTACK_KEY = process.env.BROWSERSTACK_KEY,
     },
+    // TODO: generalize this to "buildId".
+    // TODO: we may want a way to identify the calling app (which
+    //   app's CI process initiated the test run).
     build: { TRAVIS_BUILD_NUMBER = process.env.TRAVIS_BUILD_NUMBER },
   } = config
   return (testName) => {
@@ -93,6 +101,7 @@ export const signIn = async (
   const testUserEmail = INTEGRATION_TEST_USER_EMAIL
   const testUserPassword = INTEGRATION_TEST_USER_PASSWORD
   if (!testUserEmail) {
+    // TODO: don't refer to env vars but rather the config property.
     throw new Error(
       'You must provide an email via `process.env.INTEGRATION_TEST_USER_EMAIL`.'
     )

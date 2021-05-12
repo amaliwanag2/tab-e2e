@@ -6,6 +6,7 @@ import initDriver from './utils/driver-mgr'
 // config = { selenium: {}, browserstack: {}, build: {}, mailosaur: {} }
 // see driver-mgr for full shape
 const init = (config = {}) => {
+  // TODO: do some config validation before using it.
   const getDriver = initDriver(config)
   const basicLegacyTests = getBasicLegacyTests(getDriver)
   const searchTests = getSearchTests(getDriver)
