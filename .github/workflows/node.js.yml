@@ -6,6 +6,9 @@ jobs:
   test:
     runs-on: ubuntu-latest
     env:
+      BROWSERSTACK_USER: kevinjennison1
+      SELENIUM_DRIVER_TYPE: remote
+      SELENIUM_HOST: https://test-tab2017.gladly.io
       # A unique build identifier passed to tab-e2e.
       TRAVIS_BUILD_NUMBER: tab-e2e-${{ github.run_number }}
     steps:
