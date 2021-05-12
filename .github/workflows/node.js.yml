@@ -5,6 +5,9 @@ on: [push, pull_request]
 jobs:
   test:
     runs-on: ubuntu-latest
+    env:
+      # A unique build identifier passed to tab-e2e.
+      TRAVIS_BUILD_NUMBER: tab-e2e-${{ github.run_number }}
     steps:
     - uses: actions/checkout@v2
     - name: Run tests and build on Node
@@ -12,5 +15,4 @@ jobs:
       with:
         node-version: 14.x
     - run: yarn install
-    # TODO: run tests (need to set env vars first)
-    - run: yarn run lint
+    - run: yarn run test
