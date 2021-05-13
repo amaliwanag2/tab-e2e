@@ -69,10 +69,13 @@ const initDriver = (config = { selenium: {}, browserstack: {}, build: {} }) => {
 export default initDriver
 
 export const waitForElementExistsByCustomSelector = (driver, selector) =>
-  driver.wait(until.elementLocated(selector))
+  driver.wait(until.elementLocated(selector), 10000)
 
 export const waitForElementExistsByTestId = (driver, dataTestId) =>
-  driver.wait(until.elementLocated(By.css(`[data-test-id='${dataTestId}']`)))
+  driver.wait(
+    until.elementLocated(By.css(`[data-test-id='${dataTestId}']`)),
+    10000
+  )
 
 export const getElementByTestId = (driver, dataTestId) =>
   driver.findElement(By.css(`[data-test-id='${dataTestId}']`))
