@@ -13,7 +13,7 @@ import EmailClient from '../utils/mailosaurClient'
 /* eslint-disable jest/no-jasmine-globals */
 /* eslint-env jest */
 /* globals jasmine */
-const testTimeoutdefault = 100e3
+const testTimeoutdefault = 300000
 jasmine.DEFAULT_TIMEOUT_INTERVAL = testTimeoutdefault
 
 const getUserSignupTests = (getDriver) => {
