@@ -73,7 +73,8 @@ const getSearchTests = (getDriver) => {
         // )
         // const inputVal = await inputElem.getAttribute('value')
         // expect(inputVal).toEqual('hi there!')
-        // await driver.quit()
+
+        await driver.quit()
       },
       testTimeout: testTimeoutdefault,
     },
