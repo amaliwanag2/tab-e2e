@@ -8,7 +8,7 @@ const BROWSER_NAME = 'chrome'
 const BROWSERSTACK_PROJECT = 'tab'
 const BROWSERSTACK_BUILD = 'tab-'
 
-MAX_WAIT_MS = 20000
+const TWENTY_SECONDS_IN_MS = 20e3
 
 const getAppBaseUrl = () => {
   // TODO: remove defaults
@@ -71,12 +71,12 @@ const initDriver = (config = { selenium: {}, browserstack: {}, build: {} }) => {
 export default initDriver
 
 export const waitForElementExistsByCustomSelector = (driver, selector) =>
-  driver.wait(until.elementLocated(selector), MAX_WAIT_MS)
+  driver.wait(until.elementLocated(selector), TWENTY_SECONDS_IN_MS)
 
 export const waitForElementExistsByTestId = (driver, dataTestId) =>
   driver.wait(
     until.elementLocated(By.css(`[data-test-id='${dataTestId}']`)),
-    MAX_WAIT_MS
+    TWENTY_SECONDS_IN_MS
   )
 
 export const getElementByTestId = (driver, dataTestId) =>
