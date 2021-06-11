@@ -30,8 +30,7 @@ const getSearchTests = (getDriver) => {
       testTimeout: testTimeoutdefault,
     },
     {
-      description:
-        'should load the search page (with search query) after signing in',
+      description: 'should load the search page after signing in',
       test: async () => {
         const {
           driver,
@@ -61,12 +60,18 @@ const getSearchTests = (getDriver) => {
           driver,
           By.css(inputElemCSSSelector)
         )
-        const inputElem = await driver.findElement(
+        await driver.findElement(
           By.css(`[data-test-id='search-input'] > input`)
         )
-        const inputVal = await inputElem.getAttribute('value')
-        expect(inputVal).toEqual('hi there!')
-        await driver.quit()
+
+        // Disabled due to changes:
+        // https://github.com/gladly-team/tab/pull/973
+        // const inputElem = await driver.findElement(
+        //   By.css(`[data-test-id='search-input'] > input`)
+        // )
+        // const inputVal = await inputElem.getAttribute('value')
+        // expect(inputVal).toEqual('hi there!')
+        // await driver.quit()
       },
       testTimeout: testTimeoutdefault,
     },
