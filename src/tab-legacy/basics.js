@@ -6,7 +6,8 @@ import {
 /* eslint-disable jest/no-jasmine-globals */
 /* eslint-env jest */
 /* globals jasmine */
-const testTimeoutdefault = 70e3
+const FIVE_MINUTES_IN_MS = 3e5
+const testTimeoutdefault = FIVE_MINUTES_IN_MS
 jasmine.DEFAULT_TIMEOUT_INTERVAL = testTimeoutdefault
 
 const getBasicLegacyTests = (getDriver) => {

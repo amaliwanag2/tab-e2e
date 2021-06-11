@@ -8,6 +8,8 @@ const BROWSER_NAME = 'chrome'
 const BROWSERSTACK_PROJECT = 'tab'
 const BROWSERSTACK_BUILD = 'tab-'
 
+MAX_WAIT_MS = 20000
+
 const getAppBaseUrl = () => {
   // TODO: remove defaults
   const seleniumHostDefault = 'https://test-tab2017.gladly.io'
@@ -69,12 +71,12 @@ const initDriver = (config = { selenium: {}, browserstack: {}, build: {} }) => {
 export default initDriver
 
 export const waitForElementExistsByCustomSelector = (driver, selector) =>
-  driver.wait(until.elementLocated(selector), 10000)
+  driver.wait(until.elementLocated(selector), MAX_WAIT_MS)
 
 export const waitForElementExistsByTestId = (driver, dataTestId) =>
   driver.wait(
     until.elementLocated(By.css(`[data-test-id='${dataTestId}']`)),
-    10000
+    MAX_WAIT_MS
   )
 
 export const getElementByTestId = (driver, dataTestId) =>

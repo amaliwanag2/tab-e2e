@@ -12,7 +12,9 @@ import {
 } from '../utils/driver-mgr'
 
 const { By } = webdriver
-const testTimeoutdefault = 70e3
+
+const FIVE_MINUTES_IN_MS = 3e5
+const testTimeoutdefault = FIVE_MINUTES_IN_MS
 jasmine.DEFAULT_TIMEOUT_INTERVAL = testTimeoutdefault
 
 const getSearchTests = (getDriver) => {
