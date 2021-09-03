@@ -210,15 +210,6 @@ const getUserSignupTests = (getDriver) => {
           await click(driver, By.xpath('//span[text()="Next"]'))
           await waitForElementExistsByCustomSelector(
             driver,
-            By.xpath('//h5[text()="Make a difference right meow"]')
-          )
-          const secondTitle = await driver.findElements(
-            By.xpath('//h5[text()="Make a difference right meow"]')
-          )
-          expect(secondTitle.length).toEqual(1)
-          await click(driver, By.xpath('//span[text()="Next"]'))
-          await waitForElementExistsByCustomSelector(
-            driver,
             By.xpath(`//h5[text()="It doesn't cost you a thing"]`)
           )
           const thirdTitle = await driver.findElements(
@@ -312,15 +303,6 @@ const getUserSignupTests = (getDriver) => {
             By.xpath('//h5[text()="Your tabs are doing great things"]')
           )
           expect(firstTitle.length).toEqual(1)
-          await click(driver, By.xpath('//span[text()="Next"]'))
-          await waitForElementExistsByCustomSelector(
-            driver,
-            By.xpath('//h5[text()="Make a difference right meow"]')
-          )
-          const secondTitle = await driver.findElements(
-            By.xpath('//h5[text()="Make a difference right meow"]')
-          )
-          expect(secondTitle.length).toEqual(1)
           await click(driver, By.xpath('//span[text()="Next"]'))
           await waitForElementExistsByCustomSelector(
             driver,
