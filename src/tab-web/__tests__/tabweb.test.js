@@ -1,7 +1,5 @@
 import initDriver from '../../utils/driver-mgr'
-import getBasicLegacyTests from '../basics'
-import getSearchTests from '../search'
-import getUserSignup from '../userSignup'
+import getSquadTests from '../squads'
 
 const config = {
   selenium: {
@@ -19,12 +17,10 @@ const config = {
   build: { TRAVIS_BUILD_NUMBER: process.env.TRAVIS_BUILD_NUMBER },
 }
 describe('Tab: acceptance tests', () => {
-  const basicTests = getBasicLegacyTests(initDriver(config))
-  const searchTests = getSearchTests(initDriver(config))
-  const userSignupLegacyTests = getUserSignup(initDriver(config))
-  const tests = [...basicTests, ...searchTests, ...userSignupLegacyTests]
+  const squadTests = getSquadTests(initDriver(config))
+  const tests = [...squadTests]
   tests.forEach(({ description, test, testTimeout }) =>
     // eslint-disable-next-line jest/expect-expect, jest/valid-title
-    it.skip(description, test, testTimeout)
+    it(description, test, testTimeout)
   )
 })
