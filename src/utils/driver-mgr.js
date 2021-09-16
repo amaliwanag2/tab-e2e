@@ -26,6 +26,8 @@ const getAppBaseUrl = () => {
   return process.env.SELENIUM_HOST || 'https://test-tab2017.gladly.io'
 }
 
+export const sleep = (ms) => new Promise((resolve) => setTimeout(resolve, ms))
+
 export const getAbsoluteUrl = (relativeUrl) =>
   `${getAppBaseUrl()}${relativeUrl}`
 
@@ -130,6 +132,7 @@ export const signIn = async (
   await setValue(driver, passwordInputSelector, testUserPassword)
   await click(driver, By.css('button[type="submit"]'))
 }
+
 export const signUp = async (
   driver,
   INTEGRATION_TEST_USER_EMAIL,
@@ -157,4 +160,179 @@ export const signUp = async (
   await waitForElementExistsByCustomSelector(driver, passwordInputSelector)
   await setValue(driver, passwordInputSelector, testUserPassword)
   await click(driver, By.css('button[type="submit"]'))
+}
+
+export const logOut = async (driver, mailClient) => {
+  await navigateTo(driver, '/newtab')
+  const iconPath = '//a[@href="/newtab/account/"]'
+  await waitAndClick(driver, By.xpath(iconPath))
+  await waitForElementExistsByCustomSelector(
+    driver,
+    By.xpath(`//p[text()="${mailClient.email}"]`)
+  )
+  await waitAndClick(driver, By.xpath('//span[text()="Log Out"]'))
+  await waitForElementExistsByCustomSelector(
+    driver,
+    By.xpath('//span[text()="Sign in with email"]')
+  )
+}
+
+export const setCats = async (driver) => {
+  await navigateTo(driver, '/cats/')
+  await waitAndClick(driver, By.css('button'))
+  await waitForElementExistsByCustomSelector(
+    driver,
+    By.css(`[aria-label='Add to Chrome'`)
+  )
+  await navigateTo(driver, '/newtab/first-tab')
+  await waitForElementExistsByCustomSelector(
+    driver,
+    By.xpath('//span[text()="Sign in with email"]')
+  )
+}
+
+export const completeIntroFlow = async (driver, mailClient, squads = false) => {
+  const link = (await mailClient.getLink()).replace('dev-', 'test-')
+  await driver.navigate().to(link)
+  await waitForElementExistsByCustomSelector(
+    driver,
+    By.xpath('//button[text()="Continue"]')
+  )
+  await click(driver, By.xpath('//button[text()="Continue"]'))
+  await waitForElementExistsByCustomSelector(driver, By.id('username-input'))
+  await setValue(
+    driver,
+    By.id('username-input'),
+    mailClient.email.split('@')[0]
+  )
+  await click(driver, By.xpath('//span[text()="Next"]'))
+  await waitForElementExistsByCustomSelector(
+    driver,
+    By.xpath('//span[text()="Next"]')
+  )
+  await waitForElementExistsByCustomSelector(
+    driver,
+    By.xpath('//h5[text()="Your tabs are doing great things"]')
+  )
+  await click(driver, By.xpath('//span[text()="Next"]'))
+  if (squads) {
+    await waitForElementExistsByCustomSelector(
+      driver,
+      By.xpath('//span[text()="Next"]')
+    )
+    await waitForElementExistsByCustomSelector(
+      driver,
+      By.xpath('//h5[text()="Help more cats with squads"]')
+    )
+    await click(driver, By.xpath('//span[text()="Next"]'))
+  }
+  await waitForElementExistsByCustomSelector(
+    driver,
+    By.xpath(`//h5[text()="It doesn't cost you a thing"]`)
+  )
+  await click(driver, By.xpath('//span[text()="Next"]'))
+  await waitAndClick(driver, By.xpath(`//span[text()="I'M READY!"]`))
+  await new Promise((res) => setTimeout(() => res(), 1000))
+  await navigateTo(driver, '/newtab')
+}
+
+export const inviteUser = async (driver, invitingUser, invitedUser) => {
+  await waitForElementExistsByCustomSelector(
+    driver,
+    By.xpath(`//div[label[contains(., 'Your name')]]/div/input`)
+  )
+  await setValue(
+    driver,
+    By.xpath(`//div[label[contains(., 'Your name')]]/div/input`),
+    'test user'
+  )
+  await waitForElementExistsByCustomSelector(
+    driver,
+    By.xpath(`//div[label[contains(., 'Recipients')]]/div/input`)
+  )
+  await setValue(
+    driver,
+    By.xpath(`//div[label[contains(., 'Recipients')]]/div/input`),
+    invitedUser.email
+  )
+  await waitForElementExistsByCustomSelector(
+    driver,
+    By.xpath(`//div[label[contains(., 'Message')]]/div/textarea`)
+  )
+  await setValue(
+    driver,
+    By.xpath(`//div[label[contains(., 'Message')]]/div/textarea`),
+    'test Message'
+  )
+  await waitAndClick(driver, By.xpath(`//span[text()="Send Invite"]`))
+  await new Promise((res) => setTimeout(() => res(), 1000))
+}
+
+export const createMission = async (driver, invitingUser, invitedUser) => {
+  await waitAndClick(
+    driver,
+    By.xpath('//span[contains(text(),"create a squad")]')
+  )
+  await waitForElementExistsByCustomSelector(
+    driver,
+    By.xpath(`//div[label[contains(., 'Squad Name')]]/div/input`)
+  )
+  await setValue(
+    driver,
+    By.xpath(`//div[label[contains(., 'Squad Name')]]/div/input`),
+    invitingUser.email.split('@')[0]
+  )
+  await waitAndClick(driver, By.xpath(`//span[text()="next"]`))
+  await inviteUser(driver, invitingUser, invitedUser)
+}
+
+export const signUpViaEmailInvite = async (driver, user) => {
+  const referralLink = await user.getEmailInvite()
+  await driver.navigate().to(referralLink)
+  await waitForElementExistsByCustomSelector(
+    driver,
+    By.xpath(
+      '//div[text()="Your friend has invited you to help join their rescue mission"]'
+    )
+  )
+  const testUrl = (await driver.getCurrentUrl())
+    .toString()
+    .replace('tab.', 'test-tab2017.')
+  await driver.navigate().to(testUrl)
+  await navigateTo(driver, '/newtab/first-tab')
+  await waitForElementExistsByCustomSelector(
+    driver,
+    By.xpath('//span[text()="Sign in with email"]')
+  )
+  await signUp(driver, user.email, user.password)
+}
+
+export const completeMission = async (driver) => {
+  await waitAndClick(driver, By.xpath('//span[text()="View Details"]'))
+  await waitForElementExistsByCustomSelector(
+    driver,
+    By.xpath('//p[text()="started"]')
+  )
+  await navigateTo(driver, '/newtab')
+  await driver.navigate().refresh()
+  await sleep(2500)
+  await driver.navigate().refresh()
+  await sleep(2500)
+  await driver.navigate().refresh()
+  await waitForElementExistsByCustomSelector(
+    driver,
+    By.xpath('//p[text()="Mission Completed!"]')
+  )
+}
+export const restartMission = async (driver) => {
+  await waitAndClick(driver, By.xpath('//span[text()="View Details"]'))
+  await waitForElementExistsByCustomSelector(
+    driver,
+    By.xpath('//p[text()="Mission Completed!"]')
+  )
+  await waitAndClick(driver, By.xpath('//span[text()="RESTART MISSION"]'))
+  await waitForElementExistsByCustomSelector(
+    driver,
+    By.xpath('//p[text()="pending"]')
+  )
 }
