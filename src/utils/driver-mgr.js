@@ -175,6 +175,7 @@ export const logOut = async (driver, mailClient) => {
     driver,
     By.xpath('//span[text()="Sign in with email"]')
   )
+  await sleep(3000)
 }
 
 export const setCats = async (driver) => {

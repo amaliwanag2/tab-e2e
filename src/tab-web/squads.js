@@ -57,6 +57,7 @@ const getUserSignupTests = (getDriver) => {
           await completeMission(driver)
           await restartMission(driver)
           await logOut(driver, user2)
+          await driver.manage().deleteAllCookies()
           await signIn(driver, user1.email, user1.password)
           // see mission completed and accept pending invite
           await waitForElementExistsByCustomSelector(
@@ -111,10 +112,13 @@ const getUserSignupTests = (getDriver) => {
           await signUp(driver, user1.email, user1.password)
           await completeIntroFlow(driver, user1)
           await logOut(driver, user1)
+          await driver.manage().deleteAllCookies()
+          await setCats(driver)
           await signUp(driver, user2.email, user2.password)
           await completeIntroFlow(driver, user2)
           await createMission(driver, user2, user1)
           await logOut(driver, user2)
+          await driver.manage().deleteAllCookies()
           await signIn(driver, user1.email, user1.password)
           await waitAndClick(driver, By.xpath('//span[text()="Accept"]'))
           await waitForElementExistsByCustomSelector(
@@ -169,6 +173,7 @@ const getUserSignupTests = (getDriver) => {
           await completeIntroFlow(driver, user2)
           await createMission(driver, user2, user1)
           await logOut(driver, user2)
+          await driver.manage().deleteAllCookies()
           await signIn(driver, user1.email, user1.password)
           await waitAndClick(driver, By.xpath('//span[text()="Reject"]'))
           await logOut(driver, user1)
