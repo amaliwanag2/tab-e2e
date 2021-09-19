@@ -48,6 +48,7 @@ class EmailClient {
   async getLink() {
     const criteria = {
       sentTo: this.email,
+      subject: 'Verify your email for For a Cause',
     }
     const email = await promiseRetry(
       async () =>
@@ -58,6 +59,20 @@ class EmailClient {
     )
     const firstLink = email.html.links[0]
     return firstLink.text
+  }
+
+  async getEmailInvite() {
+    const criteria = {
+      sentTo: this.email,
+    }
+    const email = await promiseRetry(
+      async () =>
+        this.mailosaur.messages.get(this.serverId, criteria, {
+          receivedAfter: this.receivedAfter,
+        }),
+      { maxTimeout: 5000 }
+    )
+    return email.html.links[0].href
   }
 }
 export default EmailClient
