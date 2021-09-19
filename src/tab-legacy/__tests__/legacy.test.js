@@ -25,6 +25,6 @@ describe('Tab: acceptance tests', () => {
   const tests = [...basicTests, ...searchTests, ...userSignupLegacyTests]
   tests.forEach(({ description, test, testTimeout }) =>
     // eslint-disable-next-line jest/expect-expect, jest/valid-title
-    it(description, test, testTimeout)
+    it.skip(description, test, testTimeout)
   )
 })

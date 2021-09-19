@@ -206,11 +206,8 @@ export const completeIntroFlow = async (driver, mailClient, squads = false) => {
     By.id('username-input'),
     mailClient.email.split('@')[0]
   )
+  await sleep(1000)
   await click(driver, By.xpath('//span[text()="Next"]'))
-  await waitForElementExistsByCustomSelector(
-    driver,
-    By.xpath('//span[text()="Next"]')
-  )
   await waitForElementExistsByCustomSelector(
     driver,
     By.xpath('//h5[text()="Your tabs are doing great things"]')
