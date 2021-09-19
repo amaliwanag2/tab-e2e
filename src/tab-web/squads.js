@@ -51,20 +51,12 @@ const getUserSignupTests = (getDriver) => {
           await completeIntroFlow(driver, user1)
           await createMission(driver, user1, user2)
           await logOut(driver, user1)
-          await driver.manage().deleteAllCookies()
-          await driver.executeScript(
-            'window.localStorage.removeItem("tab.user.username");'
-          )
+
           await signUpViaEmailInvite(driver, user2)
           await completeIntroFlow(driver, user2, true)
           await completeMission(driver)
           await restartMission(driver)
           await logOut(driver, user2)
-          await driver.manage().deleteAllCookies()
-          await driver.executeScript(
-            'window.localStorage.removeItem("tab.user.username");'
-          )
-          await setCats(driver)
           await signIn(driver, user1.email, user1.password)
           // see mission completed and accept pending invite
           await waitForElementExistsByCustomSelector(
@@ -74,7 +66,7 @@ const getUserSignupTests = (getDriver) => {
           await waitAndClick(driver, By.xpath('//span[text()="View Details"]'))
           await waitForElementExistsByCustomSelector(
             driver,
-            By.xpath('//p[text()="Mission Completed!"]')
+            By.xpath('//p[text()="Mission Complete"]')
           )
           await waitAndClick(driver, By.xpath('//span[text()="Accept"]'))
           await waitForElementExistsByCustomSelector(
@@ -119,20 +111,12 @@ const getUserSignupTests = (getDriver) => {
           await signUp(driver, user1.email, user1.password)
           await completeIntroFlow(driver, user1)
           await logOut(driver, user1)
-          await driver.manage().deleteAllCookies()
-          await driver.executeScript(
-            'window.localStorage.removeItem("tab.user.username");'
-          )
-          await setCats(driver)
+
           await signUp(driver, user2.email, user2.password)
           await completeIntroFlow(driver, user2)
           await createMission(driver, user2, user1)
           await logOut(driver, user2)
-          await driver.manage().deleteAllCookies()
-          await driver.executeScript(
-            'window.localStorage.removeItem("tab.user.username");'
-          )
-          await setCats(driver)
+
           await signIn(driver, user1.email, user1.password)
           await waitAndClick(driver, By.xpath('//span[text()="Accept"]'))
           await waitForElementExistsByCustomSelector(
@@ -145,10 +129,7 @@ const getUserSignupTests = (getDriver) => {
           )
           await inviteUser(driver, user1, user3)
           await logOut(driver, user1)
-          await driver.manage().deleteAllCookies()
-          await driver.executeScript(
-            'window.localStorage.removeItem("tab.user.username");'
-          )
+
           await signUpViaEmailInvite(driver, user3)
           await completeIntroFlow(driver, user3, true)
         } finally {
@@ -184,28 +165,14 @@ const getUserSignupTests = (getDriver) => {
           await signUp(driver, user1.email, user1.password)
           await completeIntroFlow(driver, user1)
           await logOut(driver, user1)
-          await driver.executeScript(
-            'window.localStorage.removeItem("tab.user.username");'
-          )
-          await driver.manage().deleteAllCookies()
-          await setCats(driver)
           await signUp(driver, user2.email, user2.password)
           await completeIntroFlow(driver, user2)
           await createMission(driver, user2, user1)
           await logOut(driver, user2)
-          await driver.manage().deleteAllCookies()
-          await driver.executeScript(
-            'window.localStorage.removeItem("tab.user.username");'
-          )
-          await setCats(driver)
+
           await signIn(driver, user1.email, user1.password)
           await waitAndClick(driver, By.xpath('//span[text()="Reject"]'))
           await logOut(driver, user1)
-          await driver.manage().deleteAllCookies()
-          await driver.executeScript(
-            'window.localStorage.removeItem("tab.user.username");'
-          )
-          await setCats(driver)
           await signIn(driver, user2.email, user2.password)
           await waitForElementExistsByCustomSelector(
             driver,

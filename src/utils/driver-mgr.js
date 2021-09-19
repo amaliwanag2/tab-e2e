@@ -331,7 +331,7 @@ export const restartMission = async (driver) => {
   await waitAndClick(driver, By.xpath('//span[text()="View Details"]'))
   await waitForElementExistsByCustomSelector(
     driver,
-    By.xpath('//p[text()="Mission Completed!"]')
+    By.xpath('//p[text()="Mission Complete"]')
   )
   await waitAndClick(driver, By.xpath('//span[text()="RESTART MISSION"]'))
   await waitForElementExistsByCustomSelector(
