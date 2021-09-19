@@ -73,6 +73,10 @@ const getUserSignupTests = (getDriver) => {
             driver,
             By.xpath('//p[text()="started"]')
           )
+          const started = await driver.findElements(
+            By.xpath('//p[text()="started"]')
+          )
+          expect(started.length).toEqual(1)
         } finally {
           await driver.quit()
         }
@@ -132,6 +136,15 @@ const getUserSignupTests = (getDriver) => {
 
           await signUpViaEmailInvite(driver, user3)
           await completeIntroFlow(driver, user3, true)
+          await completeMission(driver)
+          await waitForElementExistsByCustomSelector(
+            driver,
+            By.xpath('//span[text()="View Details"]')
+          )
+          const missionCompleteNotification = await driver.findElements(
+            By.xpath('//span[text()="View Details"]')
+          )
+          expect(missionCompleteNotification.length).toEqual(1)
         } finally {
           await driver.quit()
         }
@@ -178,6 +191,10 @@ const getUserSignupTests = (getDriver) => {
             driver,
             By.xpath('//span[contains(text(),"mission pending")]')
           )
+          const missionPending = await driver.findElements(
+            By.xpath('//span[contains(text(),"mission pending")]')
+          )
+          expect(missionPending.length).toEqual(1)
         } finally {
           await driver.quit()
         }
