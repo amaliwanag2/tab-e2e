@@ -136,7 +136,6 @@ const getUserSignupTests = (getDriver) => {
 
           await signUpViaEmailInvite(driver, user3)
           await completeIntroFlow(driver, user3, true)
-          await completeMission(driver)
           await waitForElementExistsByCustomSelector(
             driver,
             By.xpath('//span[text()="View Details"]')
