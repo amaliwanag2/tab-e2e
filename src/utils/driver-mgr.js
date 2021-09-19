@@ -297,6 +297,11 @@ export const signUpViaEmailInvite = async (driver, user) => {
     .toString()
     .replace('tab.', 'test-tab2017.')
   await driver.navigate().to(testUrl)
+  await waitAndClick(driver, By.css('button'))
+  await waitForElementExistsByCustomSelector(
+    driver,
+    By.css(`[aria-label='Add to Chrome'`)
+  )
   await navigateTo(driver, '/newtab/first-tab')
   await waitForElementExistsByCustomSelector(
     driver,
