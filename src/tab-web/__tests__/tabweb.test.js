@@ -17,6 +17,7 @@ const config = {
   build: { TRAVIS_BUILD_NUMBER: process.env.TRAVIS_BUILD_NUMBER },
 }
 describe('Tab: acceptance tests', () => {
+  jest.retryTimes(2)
   const squadTests = getSquadTests(initDriver(config))
   const tests = [...squadTests]
   tests.forEach(({ description, test, testTimeout }) =>
