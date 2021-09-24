@@ -61,5 +61,8 @@
     "node-fetch": "^2.6.1",
     "promise-retry": "^2.0.1",
     "selenium-webdriver": "^4.0.0-alpha.5"
+  },
+  "peerDependencies": {
+    "jest": "^26.0.0"
   }
 }
