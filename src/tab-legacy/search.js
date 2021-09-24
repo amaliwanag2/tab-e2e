@@ -1,5 +1,4 @@
 /* eslint-disable jest/no-jasmine-globals */
-/* globals jasmine */
 /* eslint-env jest */
 // import webdriver from 'selenium-webdriver'
 // import fetch from 'node-fetch'
@@ -15,7 +14,7 @@
 
 const FIVE_MINUTES_IN_MS = 3e5
 const testTimeoutdefault = FIVE_MINUTES_IN_MS
-jasmine.DEFAULT_TIMEOUT_INTERVAL = testTimeoutdefault
+jest.setTimeout(testTimeoutdefault)
 
 // Disabling due to search UX changes:
 // https://github.com/gladly-team/tab/pull/984

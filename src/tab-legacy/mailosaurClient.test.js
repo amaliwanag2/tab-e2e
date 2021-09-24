@@ -1,11 +1,9 @@
 // Tests aren't necessary unless developing on the Mailosaur client.
-/* eslint jest/no-jasmine-globals:0 jest/no-disabled-tests:0 */
-/* globals jasmine */
 
 import MailKitty from '../utils/mailosaurClient'
 
 const testTimeout = 70e3
-jasmine.DEFAULT_TIMEOUT_INTERVAL = testTimeout
+jest.setTimeout(testTimeout)
 describe('Search: acceptance tests', () => {
   afterEach(() => {})
 
