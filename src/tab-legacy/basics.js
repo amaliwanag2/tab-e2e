@@ -6,7 +6,7 @@ import {
 /* eslint-env jest */
 const FIVE_MINUTES_IN_MS = 3e5
 const testTimeoutdefault = FIVE_MINUTES_IN_MS
-jest.setTimeout = testTimeoutdefault
+jest.setTimeout(testTimeoutdefault)
 
 const getBasicLegacyTests = (getDriver) => {
   const tests = [
