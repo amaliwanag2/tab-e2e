@@ -65,15 +65,15 @@ const getUserSignupTests = (getDriver) => {
           await waitAndClick(driver, By.xpath('//span[text()="View Details"]'))
           await waitForElementExistsByCustomSelector(
             driver,
-            By.xpath('//p[text()="Mission Complete"]')
+            By.xpath('//h5[text()="Mission Complete"]')
           )
           await waitAndClick(driver, By.xpath('//span[text()="Accept"]'))
           await waitForElementExistsByCustomSelector(
             driver,
-            By.xpath('//p[text()="started"]')
+            By.xpath('//h6[text()="Mission Started"]')
           )
           const started = await driver.findElements(
-            By.xpath('//p[text()="started"]')
+            By.xpath('//h6[text()="Mission Started"]')
           )
           expect(started.length).toEqual(1)
         } finally {
@@ -124,11 +124,11 @@ const getUserSignupTests = (getDriver) => {
           await waitAndClick(driver, By.xpath('//span[text()="Accept"]'))
           await waitForElementExistsByCustomSelector(
             driver,
-            By.xpath('//p[text()="started"]')
+            By.xpath('//h6[text()="Mission Started"]')
           )
           await waitAndClick(
             driver,
-            By.css(`[data-test-id='addSquadMateButton']`)
+            By.xpath('//span[text()="Add Squad Mates"]')
           )
           await inviteUser(driver, user1, user3)
           await logOut(driver, user1)
