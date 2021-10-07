@@ -314,7 +314,7 @@ export const completeMission = async (driver) => {
   await waitAndClick(driver, By.xpath('//span[text()="View Details"]'))
   await waitForElementExistsByCustomSelector(
     driver,
-    By.xpath('//p[text()="started"]')
+    By.xpath('//h6[text()="Mission Started"]')
   )
   await navigateTo(driver, '/newtab')
   await driver.navigate().refresh()
@@ -331,11 +331,11 @@ export const restartMission = async (driver) => {
   await waitAndClick(driver, By.xpath('//span[text()="View Details"]'))
   await waitForElementExistsByCustomSelector(
     driver,
-    By.xpath('//p[text()="Mission Complete"]')
+    By.xpath('//h5[text()="Mission Complete"]')
   )
   await waitAndClick(driver, By.xpath('//span[text()="RESTART MISSION"]'))
   await waitForElementExistsByCustomSelector(
     driver,
-    By.xpath('//p[text()="pending"]')
+    By.xpath('//h6[text()="Awaiting Squadmates"]')
   )
 }
