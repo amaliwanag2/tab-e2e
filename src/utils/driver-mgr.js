@@ -191,8 +191,33 @@ export const setCats = async (driver) => {
     By.xpath('//span[text()="Sign in with email"]')
   )
 }
+export const setCause = async (driver, landingPath, isReferral = false) => {
+  await navigateTo(driver, landingPath)
+  if (isReferral) {
+    await waitForElementExistsByCustomSelector(
+      driver,
+      By.xpath('//div[text()="Your friend sent you a gift"]')
+    )
+  }
+  await waitAndClick(driver, By.css('button'))
+  await waitForElementExistsByCustomSelector(
+    driver,
+    By.css(`[aria-label='Add to Chrome'`)
+  )
+  await navigateTo(driver, '/newtab/first-tab')
+  await waitForElementExistsByCustomSelector(
+    driver,
+    By.xpath('//span[text()="Sign in with email"]')
+  )
+}
 
-export const completeIntroFlow = async (driver, mailClient, squads = false) => {
+export const completeIntroFlow = async (
+  driver,
+  mailClient,
+  squads = false,
+  referralText = null,
+  text = 'Help more cats with squads'
+) => {
   const link = (await mailClient.getLink()).replace('dev-', 'test-')
   await driver.navigate().to(link)
   await waitForElementExistsByCustomSelector(
@@ -220,7 +245,7 @@ export const completeIntroFlow = async (driver, mailClient, squads = false) => {
     )
     await waitForElementExistsByCustomSelector(
       driver,
-      By.xpath('//h5[text()="Help more cats with squads"]')
+      By.xpath(`//h5[text()="${text}"]`)
     )
     await click(driver, By.xpath('//span[text()="Next"]'))
   }
@@ -231,6 +256,9 @@ export const completeIntroFlow = async (driver, mailClient, squads = false) => {
   await click(driver, By.xpath('//span[text()="Next"]'))
   await waitAndClick(driver, By.xpath(`//span[text()="I'M READY!"]`))
   await new Promise((res) => setTimeout(() => res(), 1000))
+  if (referralText) {
+    await driver.findElements(By.xpath(`//h5[text()="${referralText}"]`))
+  }
   await navigateTo(driver, '/newtab')
 }
 

@@ -7,6 +7,9 @@ import {
   setValue,
   click,
   waitAndClick,
+  setCause,
+  completeIntroFlow,
+  logOut,
 } from '../utils/driver-mgr'
 import EmailClient from '../utils/mailosaurClient'
 
@@ -42,10 +45,6 @@ const getUserSignupTests = (getDriver) => {
             MAILOSAUR_API_KEY,
             MAILOSAUR_SERVER_ID,
           })
-          const backgroundImages = await driver.findElements(
-            By.css(`[data-test-id='cats-background']`)
-          )
-          expect(backgroundImages.length).toEqual(0)
           await signUp(driver, mailClient.email, mailClient.password)
           const link = await mailClient.getLink()
           await driver.navigate().to(link)
@@ -107,10 +106,6 @@ const getUserSignupTests = (getDriver) => {
             MAILOSAUR_API_KEY,
             MAILOSAUR_SERVER_ID,
           })
-          const backgroundImages = await driver.findElements(
-            By.css(`[data-test-id='cats-background']`)
-          )
-          expect(backgroundImages.length).toEqual(0)
           await signUp(driver, mailClient.email, mailClient.password)
           const link = await mailClient.getLink()
           await driver.navigate().to(link)
@@ -147,86 +142,26 @@ const getUserSignupTests = (getDriver) => {
       testTimeout: testTimeoutdefault,
     },
     {
-      description: 'should successfully sign up and create a user in Chrome v4',
+      description:
+        'should successfully sign up and create a user in Chrome v4 cats',
       test: async () => {
         const {
           driver,
           config: {
             mailosaur: { MAILOSAUR_API_KEY, MAILOSAUR_SERVER_ID } = {},
           },
-        } = getDriver('Tab: acceptance tests: should sign up v4')
+        } = getDriver(
+          'Tab: acceptance tests: should successfully sign up and create a user in Chrome v4 cats'
+        )
         try {
-          await navigateTo(driver, '/cats/')
-          await waitAndClick(driver, By.css('button'))
-          await waitForElementExistsByCustomSelector(
-            driver,
-            By.css(`[aria-label='Add to Chrome'`)
-          )
-          await navigateTo(driver, '/newtab/first-tab')
-          await waitForElementExistsByCustomSelector(
-            driver,
-            By.xpath('//span[text()="Sign in with email"]')
-          )
-          const backgroundImages = await driver.findElements(
-            By.css(`[data-test-id='cats-background']`)
-          )
-          expect(backgroundImages.length).toEqual(1)
-          const mailClient = await EmailClient.build({
+          const user1 = await EmailClient.build({
             MAILOSAUR_API_KEY,
             MAILOSAUR_SERVER_ID,
           })
-
-          await signUp(driver, mailClient.email, mailClient.password)
-          const link = await mailClient.getLink()
-          await driver.navigate().to(link)
-          await waitForElementExistsByCustomSelector(
-            driver,
-            By.xpath('//button[text()="Continue"]')
-          )
-          await click(driver, By.xpath('//button[text()="Continue"]'))
-          await waitForElementExistsByCustomSelector(
-            driver,
-            By.id('username-input')
-          )
-          await setValue(
-            driver,
-            By.id('username-input'),
-            mailClient.email.split('@')[0]
-          )
-          await click(driver, By.xpath('//span[text()="Next"]'))
-          await waitForElementExistsByCustomSelector(
-            driver,
-            By.xpath('//span[text()="Next"]')
-          )
-          await waitForElementExistsByCustomSelector(
-            driver,
-            By.xpath('//h5[text()="Your tabs are doing great things"]')
-          )
-          const firstTitle = await driver.findElements(
-            By.xpath('//h5[text()="Your tabs are doing great things"]')
-          )
-          expect(firstTitle.length).toEqual(1)
-          await click(driver, By.xpath('//span[text()="Next"]'))
-          await waitForElementExistsByCustomSelector(
-            driver,
-            By.xpath(`//h5[text()="It doesn't cost you a thing"]`)
-          )
-          const thirdTitle = await driver.findElements(
-            By.xpath(`//h5[text()="It doesn't cost you a thing"]`)
-          )
-          expect(thirdTitle.length).toEqual(1)
-          await click(driver, By.xpath('//span[text()="Next"]'))
-          await waitAndClick(driver, By.xpath(`//span[text()="I'M READY!"]`))
-          await new Promise((res) => setTimeout(() => res(), 1000))
-          await navigateTo(driver, '/newtab')
-          const iconPath = '//a[@href="/newtab/account/"]'
-          await waitAndClick(driver, By.xpath(iconPath))
-          await waitForElementExistsByCustomSelector(
-            driver,
-            By.xpath(`//p[text()="${mailClient.email}"]`)
-          )
-          await waitAndClick(driver, By.xpath('//span[text()="Log Out"]'))
-          await signIn(driver, mailClient.email, mailClient.password)
+          await setCause(driver, '/cats/')
+          await signUp(driver, user1.email, user1.password)
+          await completeIntroFlow(driver, user1)
+          await logOut(driver, user1)
         } finally {
           await driver.quit()
         }
@@ -235,100 +170,89 @@ const getUserSignupTests = (getDriver) => {
     },
     {
       description:
-        'should successfully sign up and create a user in Chrome v4 referral',
+        'should successfully sign up and create a user in Chrome v4 referral cats',
       test: async () => {
         const {
           driver,
           config: {
             mailosaur: { MAILOSAUR_API_KEY, MAILOSAUR_SERVER_ID } = {},
           },
-        } = getDriver('Tab: acceptance tests: should sign up v4 referral ')
+        } = getDriver(
+          'Tab: acceptance tests: should successfully sign up and create a user in Chrome v4 referral cats'
+        )
         try {
-          await navigateTo(driver, '/cats/?u=wgcuq')
-          await waitForElementExistsByCustomSelector(
-            driver,
-            By.xpath('//div[text()="Your friend sent you a gift"]')
-          )
-          const referralText = await driver.findElements(
-            By.xpath('//div[text()="Your friend sent you a gift"]')
-          )
-          expect(referralText.length).toEqual(1)
-          await waitAndClick(driver, By.css('button'))
-          await waitForElementExistsByCustomSelector(
-            driver,
-            By.css(`[aria-label='Add to Chrome'`)
-          )
-          await navigateTo(driver, '/newtab/first-tab')
-          await waitForElementExistsByCustomSelector(
-            driver,
-            By.xpath('//span[text()="Sign in with email"]')
-          )
-          const backgroundImages = await driver.findElements(
-            By.css(`[data-test-id='cats-background']`)
-          )
-          expect(backgroundImages.length).toEqual(1)
-          const mailClient = await EmailClient.build({
+          const user1 = await EmailClient.build({
             MAILOSAUR_API_KEY,
             MAILOSAUR_SERVER_ID,
           })
-
-          await signUp(driver, mailClient.email, mailClient.password)
-          const link = (await mailClient.getLink()).replace('dev-', 'test-')
-          await driver.navigate().to(link)
-          await waitForElementExistsByCustomSelector(
+          await setCause(driver, '/cats/?u=test1', true)
+          await signUp(driver, user1.email, user1.password)
+          await completeIntroFlow(
             driver,
-            By.xpath('//button[text()="Continue"]')
+            user1,
+            false,
+            "Your friend started you off with 5 cat treats, which are crucial to getting shelter cats adopted. Open a new tab now to earn your 6th treat! We'll track how many treats you've given on the top of the page:"
           )
-          await click(driver, By.xpath('//button[text()="Continue"]'))
-          await waitForElementExistsByCustomSelector(
+          await logOut(driver, user1)
+        } finally {
+          await driver.quit()
+        }
+      },
+      testTimeout: testTimeoutdefault,
+    },
+    {
+      description:
+        'should successfully sign up and create a user in Chrome v4 for teamseas',
+      test: async () => {
+        const {
+          driver,
+          config: {
+            mailosaur: { MAILOSAUR_API_KEY, MAILOSAUR_SERVER_ID } = {},
+          },
+        } = getDriver(
+          'Tab: acceptance tests: should successfully sign up and create a user in Chrome v4 for teamseas'
+        )
+        try {
+          const user1 = await EmailClient.build({
+            MAILOSAUR_API_KEY,
+            MAILOSAUR_SERVER_ID,
+          })
+          await setCause(driver, '/teamseas/')
+          await signUp(driver, user1.email, user1.password)
+          await completeIntroFlow(driver, user1)
+          await logOut(driver, user1)
+        } finally {
+          await driver.quit()
+        }
+      },
+      testTimeout: testTimeoutdefault,
+    },
+    {
+      description:
+        'should successfully sign up and create a Referral user in Chrome v4 for teamseas',
+      test: async () => {
+        const {
+          driver,
+          config: {
+            mailosaur: { MAILOSAUR_API_KEY, MAILOSAUR_SERVER_ID } = {},
+          },
+        } = getDriver(
+          'Tab: acceptance tests: should successfully sign up and create a Referral user in Chrome v4 for teamseas'
+        )
+        try {
+          const user1 = await EmailClient.build({
+            MAILOSAUR_API_KEY,
+            MAILOSAUR_SERVER_ID,
+          })
+          await setCause(driver, '/teamseas/?u=test1')
+          await signUp(driver, user1.email, user1.password)
+          await completeIntroFlow(
             driver,
-            By.id('username-input')
+            user1,
+            false,
+            "Your friend gave you a boost: you've already removed 5 plastic water bottles' worth of trash from our rivers and oceans! Open a new tab now to clean up your 6th water bottle. We'll track how many water bottles' worth of trash you've helped clean up on the top of the page:"
           )
-          await setValue(
-            driver,
-            By.id('username-input'),
-            mailClient.email.split('@')[0]
-          )
-          await click(driver, By.xpath('//span[text()="Next"]'))
-          await waitForElementExistsByCustomSelector(
-            driver,
-            By.xpath('//span[text()="Next"]')
-          )
-          await waitForElementExistsByCustomSelector(
-            driver,
-            By.xpath('//h5[text()="Your tabs are doing great things"]')
-          )
-          const firstTitle = await driver.findElements(
-            By.xpath('//h5[text()="Your tabs are doing great things"]')
-          )
-          expect(firstTitle.length).toEqual(1)
-          await click(driver, By.xpath('//span[text()="Next"]'))
-          await waitForElementExistsByCustomSelector(
-            driver,
-            By.xpath(`//h5[text()="It doesn't cost you a thing"]`)
-          )
-          const thirdTitle = await driver.findElements(
-            By.xpath(`//h5[text()="It doesn't cost you a thing"]`)
-          )
-          expect(thirdTitle.length).toEqual(1)
-          await click(driver, By.xpath('//span[text()="Next"]'))
-          await waitAndClick(driver, By.xpath(`//span[text()="I'M READY!"]`))
-          await new Promise((res) => setTimeout(() => res(), 1000))
-          const referralImpactText = await driver.findElements(
-            By.xpath(
-              `//p[text()="Your friend started you off with 5 cat treats, which are crucial to getting shelter cats adopted. Open a new tab now to earn your 6th treat! We'll track how many treats you've given on the top of the page:"]`
-            )
-          )
-          expect(referralImpactText.length).toEqual(1)
-          await navigateTo(driver, '/newtab')
-          const iconPath = '//a[@href="/newtab/account/"]'
-          await waitAndClick(driver, By.xpath(iconPath))
-          await waitForElementExistsByCustomSelector(
-            driver,
-            By.xpath(`//p[text()="${mailClient.email}"]`)
-          )
-          await waitAndClick(driver, By.xpath('//span[text()="Log Out"]'))
-          await signIn(driver, mailClient.email, mailClient.password)
+          await logOut(driver, user1)
         } finally {
           await driver.quit()
         }
