@@ -150,7 +150,9 @@ const getUserSignupTests = (getDriver) => {
           config: {
             mailosaur: { MAILOSAUR_API_KEY, MAILOSAUR_SERVER_ID } = {},
           },
-        } = getDriver('Tab: acceptance tests: should sign up v4')
+        } = getDriver(
+          'Tab: acceptance tests: should successfully sign up and create a user in Chrome v4 cats'
+        )
         try {
           const user1 = await EmailClient.build({
             MAILOSAUR_API_KEY,
@@ -175,7 +177,9 @@ const getUserSignupTests = (getDriver) => {
           config: {
             mailosaur: { MAILOSAUR_API_KEY, MAILOSAUR_SERVER_ID } = {},
           },
-        } = getDriver('Tab: acceptance tests: should sign up v4 referral ')
+        } = getDriver(
+          'Tab: acceptance tests: should successfully sign up and create a user in Chrome v4 referral cats'
+        )
         try {
           const user1 = await EmailClient.build({
             MAILOSAUR_API_KEY,
@@ -205,7 +209,9 @@ const getUserSignupTests = (getDriver) => {
           config: {
             mailosaur: { MAILOSAUR_API_KEY, MAILOSAUR_SERVER_ID } = {},
           },
-        } = getDriver('Tab: acceptance tests: should sign up v4')
+        } = getDriver(
+          'Tab: acceptance tests: should successfully sign up and create a user in Chrome v4 for teamseas'
+        )
         try {
           const user1 = await EmailClient.build({
             MAILOSAUR_API_KEY,
@@ -230,7 +236,9 @@ const getUserSignupTests = (getDriver) => {
           config: {
             mailosaur: { MAILOSAUR_API_KEY, MAILOSAUR_SERVER_ID } = {},
           },
-        } = getDriver('Tab: acceptance tests: should sign up v4')
+        } = getDriver(
+          'Tab: acceptance tests: should successfully sign up and create a Referral user in Chrome v4 for teamseas'
+        )
         try {
           const user1 = await EmailClient.build({
             MAILOSAUR_API_KEY,
