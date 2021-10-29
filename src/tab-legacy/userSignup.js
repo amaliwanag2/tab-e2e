@@ -244,7 +244,7 @@ const getUserSignupTests = (getDriver) => {
             MAILOSAUR_API_KEY,
             MAILOSAUR_SERVER_ID,
           })
-          await setCause(driver, '/teamseas/?u=test1', true)
+          await setCause(driver, '/teamseas/?u=test1')
           await signUp(driver, user1.email, user1.password)
           await completeIntroFlow(
             driver,
