@@ -6,7 +6,9 @@ import {
   navigateTo,
   setValue,
   click,
+  signUpViaEmailInviteNewHomePage,
   waitAndClick,
+  inviteUserFromHomePage,
   setCause,
   completeIntroFlow,
   logOut,
@@ -253,6 +255,38 @@ const getUserSignupTests = (getDriver) => {
             "Your friend gave you a boost: you've already removed 5 plastic water bottles' worth of trash from our rivers and oceans! Open a new tab now to clean up your 6th water bottle. We'll track how many water bottles' worth of trash you've helped clean up on the top of the page:"
           )
           await logOut(driver, user1)
+        } finally {
+          await driver.quit()
+        }
+      },
+      testTimeout: testTimeoutdefault,
+    },
+    {
+      description:
+        'should successfully email a Referral user in Chrome v4 for teamseas',
+      test: async () => {
+        const {
+          driver,
+          config: {
+            mailosaur: { MAILOSAUR_API_KEY, MAILOSAUR_SERVER_ID } = {},
+          },
+        } = getDriver(
+          'Tab: acceptance tests: should successfully email a Referral user in Chrome v4 for teamseas'
+        )
+        try {
+          const user1 = await EmailClient.build({
+            MAILOSAUR_API_KEY,
+            MAILOSAUR_SERVER_ID,
+          })
+          const user2 = await EmailClient.build({
+            MAILOSAUR_API_KEY,
+            MAILOSAUR_SERVER_ID,
+          })
+          await setCause(driver, '/teamseas')
+          await signUp(driver, user1.email, user1.password)
+          await completeIntroFlow(driver, user1)
+          await inviteUserFromHomePage(driver, user1, user2)
+          await signUpViaEmailInviteNewHomePage(driver, user2)
         } finally {
           await driver.quit()
         }
