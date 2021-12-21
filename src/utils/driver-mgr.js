@@ -293,7 +293,43 @@ export const inviteUser = async (driver, invitingUser, invitedUser) => {
   await waitAndClick(driver, By.xpath(`//span[text()="Send Invite"]`))
   await new Promise((res) => setTimeout(() => res(), 1000))
 }
-
+export const inviteUserFromHomePage = async (
+  driver,
+  invitingUser,
+  invitedUser
+) => {
+  await waitAndClick(driver, By.xpath('//span[text()="Hooray"]'))
+  await waitForElementExistsByCustomSelector(
+    driver,
+    By.xpath(`//div[label[contains(., 'Your name')]]/div/input`)
+  )
+  await setValue(
+    driver,
+    By.xpath(`//div[label[contains(., 'Your name')]]/div/input`),
+    'test user'
+  )
+  await waitForElementExistsByCustomSelector(
+    driver,
+    By.xpath(`//div[label[contains(., 'Recipients')]]/div/input`)
+  )
+  await setValue(
+    driver,
+    By.xpath(`//div[label[contains(., 'Recipients')]]/div/input`),
+    invitedUser.email
+  )
+  await waitForElementExistsByCustomSelector(
+    driver,
+    By.xpath(`//div[label[contains(., 'Message')]]/div/textarea`)
+  )
+  await setValue(
+    driver,
+    By.xpath(`//div[label[contains(., 'Message')]]/div/textarea`),
+    'test Message'
+  )
+  await waitAndClick(driver, By.xpath(`//span[text()="Send Invite"]`))
+  await new Promise((res) => setTimeout(() => res(), 1000))
+  await driver.navigate().refresh()
+}
 export const createMission = async (driver, invitingUser, invitedUser) => {
   await waitAndClick(
     driver,
@@ -311,7 +347,27 @@ export const createMission = async (driver, invitingUser, invitedUser) => {
   await waitAndClick(driver, By.xpath(`//span[text()="next"]`))
   await inviteUser(driver, invitingUser, invitedUser)
 }
-
+export const signUpViaEmailInviteNewHomePage = async (
+  driver,
+  user,
+  homepageText = 'The easiest way to save our seas'
+) => {
+  const referralLink = await user.getEmailInvite()
+  await driver.navigate().to(referralLink)
+  await waitForElementExistsByCustomSelector(
+    driver,
+    By.xpath(`//h1[text()="${homepageText}"]`)
+  )
+  const testUrl = (await driver.getCurrentUrl())
+    .toString()
+    .replace('tab.', 'test-tab2017.')
+  await driver.navigate().to(testUrl)
+  await waitAndClick(driver, By.css('button'))
+  await waitForElementExistsByCustomSelector(
+    driver,
+    By.css(`[aria-label='Add to Chrome'`)
+  )
+}
 export const signUpViaEmailInvite = async (driver, user) => {
   const referralLink = await user.getEmailInvite()
   await driver.navigate().to(referralLink)
