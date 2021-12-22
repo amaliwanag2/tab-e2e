@@ -19,7 +19,7 @@ const config = {
   build: { TRAVIS_BUILD_NUMBER: process.env.TRAVIS_BUILD_NUMBER },
 }
 describe('Tab: acceptance tests', () => {
-  jest.retryTimes(2)
+  jest.retryTimes(4)
   const basicTests = getBasicLegacyTests(initDriver(config))
   const searchTests = getSearchTests(initDriver(config))
   const userSignupLegacyTests = getUserSignup(initDriver(config))
