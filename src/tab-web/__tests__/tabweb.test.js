@@ -21,7 +21,7 @@ describe('Tab: acceptance tests', () => {
   const squadTests = getSquadTests(initDriver(config))
   const tests = [...squadTests]
   tests.forEach(({ description, test, testTimeout }) =>
-    // eslint-disable-next-line jest/expect-expect, jest/valid-title
+    // eslint-disable-next-line jest/expect-expect, jest/no-disabled-tests, jest/valid-title
     it.skip(description, test, testTimeout)
   )
 })

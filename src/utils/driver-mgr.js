@@ -26,6 +26,8 @@ const getAppBaseUrl = () => {
   return process.env.SELENIUM_HOST || 'https://test-tab2017.gladly.io'
 }
 
+// https://stackoverflow.com/a/39914235/1332513
+// eslint-disable-next-line no-promise-executor-return
 export const sleep = (ms) => new Promise((resolve) => setTimeout(resolve, ms))
 
 export const getAbsoluteUrl = (relativeUrl) =>
@@ -255,7 +257,7 @@ export const completeIntroFlow = async (
   )
   await click(driver, By.xpath('//span[text()="Next"]'))
   await waitAndClick(driver, By.xpath(`//span[text()="I'M READY!"]`))
-  await new Promise((res) => setTimeout(() => res(), 1000))
+  await sleep(1000)
   if (referralText) {
     await driver.findElements(By.xpath(`//h5[text()="${referralText}"]`))
   }
@@ -291,7 +293,7 @@ export const inviteUser = async (driver, invitingUser, invitedUser) => {
     'test Message'
   )
   await waitAndClick(driver, By.xpath(`//span[text()="Send Invite"]`))
-  await new Promise((res) => setTimeout(() => res(), 1000))
+  await sleep(1000)
 }
 export const inviteUserFromHomePage = async (
   driver,
@@ -327,7 +329,7 @@ export const inviteUserFromHomePage = async (
     'test Message'
   )
   await waitAndClick(driver, By.xpath(`//span[text()="Send Invite"]`))
-  await new Promise((res) => setTimeout(() => res(), 1000))
+  await sleep(1000)
   await driver.navigate().refresh()
 }
 export const createMission = async (driver, invitingUser, invitedUser) => {
