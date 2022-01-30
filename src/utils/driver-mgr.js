@@ -193,14 +193,24 @@ export const setCats = async (driver) => {
     By.xpath('//span[text()="Sign in with email"]')
   )
 }
-export const setCause = async (driver, landingPath, isReferral = false) => {
+
+export const setCause = async (
+  driver,
+  landingPath,
+  // eslint-disable-next-line no-unused-vars
+  isReferral = false
+) => {
   await navigateTo(driver, landingPath)
-  if (isReferral) {
-    await waitForElementExistsByCustomSelector(
-      driver,
-      By.xpath('//div[text()="Your friend sent you a gift"]')
-    )
-  }
+
+  // TODO: reenable when implemented or remove. The new version of the
+  // landing page does not have a referral message.
+  // if (isReferral) {
+  //   await waitForElementExistsByCustomSelector(
+  //     driver,
+  //     By.xpath('//div[text()="Your friend sent you a gift"]')
+  //   )
+  // }
+
   await waitAndClick(driver, By.css('button'))
   await waitForElementExistsByCustomSelector(
     driver,
