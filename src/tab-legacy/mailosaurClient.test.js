@@ -1,3 +1,4 @@
+/* eslint jest/no-disabled-tests: 0 */
 // Tests aren't necessary unless developing on the Mailosaur client.
 
 import MailKitty from '../utils/mailosaurClient'
