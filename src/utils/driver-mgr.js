@@ -310,7 +310,7 @@ export const inviteUserFromHomePage = async (
   invitingUser,
   invitedUser
 ) => {
-  await waitAndClick(driver, By.xpath('//span[text()="Hooray"]'))
+  await waitAndClick(driver, By.xpath('//span[text()="Hooray!"]'))
   await waitForElementExistsByCustomSelector(
     driver,
     By.xpath(`//div[label[contains(., 'Your name')]]/div/input`)
